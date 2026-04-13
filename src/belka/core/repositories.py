@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from belka.core.adapters import Adapter
 from belka.core.pagination.schemas import PaginationParams
-from belka.core.database import Base
+from belka.infrastructure.database import Base
 from belka.core.schemas import SchemaModel
 from belka.core.specifications import Specification
 

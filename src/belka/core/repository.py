@@ -7,9 +7,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from belka.core.adapters import Adapter
 from belka.core.pagination.schemas import PaginationParams
-from belka.infrastructure.database import Base
 from belka.core.schemas import SchemaModel
-from belka.core.specifications import Specification
+from belka.core.specification import Specification
+from belka.infrastructure.database import Base
 
 Model = type[Base]
 SchemaT = TypeVar("SchemaT")
@@ -27,11 +27,10 @@ def _get_hash_table(items: Iterable[dict]):
 
 
 def _get_new_entities(
-    data: Sequence[dict],
-    existing_entities: Sequence[SchemaModel | dict],
-    comparison_adapter: Adapter,
+        data: Sequence[dict],
+        existing_entities: Sequence[SchemaModel | dict],
+        comparison_adapter: Adapter,
 ) -> Sequence[dict]:
-
     data_for_hashing: list[dict] = [
         comparison_adapter.to_dict(data=item) for item in data
     ]
@@ -61,10 +60,10 @@ def _get_new_entities(
 
 class IRepository(Protocol[SchemaT]):
     async def execute_sql(
-        self,
-        sql_query: str,
-        parameters: dict | None,
-        result_schema: SchemaModel | None,
+            self,
+            sql_query: str,
+            parameters: dict | None,
+            result_schema: SchemaModel | None,
     ):
         raise NotImplementedError
 
@@ -72,13 +71,13 @@ class IRepository(Protocol[SchemaT]):
         raise NotImplementedError
 
     async def get_by_filters(
-        self,
-        filter_by: dict | None = None,
-        specification: Any | None = None,
-        pagination: Any | None = None,
-        order_by: Any | None = None,
-        select_data: Any | None = None,
-        get_one_or_none: bool = False,
+            self,
+            filter_by: dict | None = None,
+            specification: Any | None = None,
+            pagination: Any | None = None,
+            order_by: Any | None = None,
+            select_data: Any | None = None,
+            get_one_or_none: bool = False,
     ) -> Sequence[SchemaT]:
         raise NotImplementedError
 
@@ -88,10 +87,10 @@ class IRepository(Protocol[SchemaT]):
 
     # TODO: Сделать "create" с общим интерфейсом???
     async def create_if_not_exists(
-        self,
-        data: dict = None,
-        filter_by: dict = None,
-        **params,
+            self,
+            data: dict = None,
+            filter_by: dict = None,
+            **params,
     ) -> UUID4 | int | None:
         raise NotImplementedError
 
@@ -99,11 +98,11 @@ class IRepository(Protocol[SchemaT]):
         raise NotImplementedError
 
     async def create_many_if_not_exists(
-        self,
-        data: Sequence[dict],
-        comparison_adapter: Any,
-        filter_by: dict,
-        specification: Any | None = None,
+            self,
+            data: Sequence[dict],
+            comparison_adapter: Any,
+            filter_by: dict,
+            specification: Any | None = None,
     ) -> List[UUID4 | int]:
         raise NotImplementedError
 
@@ -112,10 +111,10 @@ class IRepository(Protocol[SchemaT]):
         raise NotImplementedError
 
     async def update_by_filters(
-        self,
-        data: dict,
-        filter_by: dict,
-        specification: Any | None = None,
+            self,
+            data: dict,
+            filter_by: dict,
+            specification: Any | None = None,
     ):
         raise NotImplementedError
 
@@ -144,10 +143,10 @@ class SQLAlchemyRepository(Generic[SchemaT]):
         self._session = session
 
     async def execute_sql(
-        self,
-        sql_query: str,
-        parameters: dict | None = None,
-        result_schema: SchemaModel | None = None,
+            self,
+            sql_query: str,
+            parameters: dict | None = None,
+            result_schema: SchemaModel | None = None,
     ):
         res = await self._session.execute(text(sql_query), parameters)
 
@@ -183,12 +182,12 @@ class SQLAlchemyRepository(Generic[SchemaT]):
 
     # TODO: Заменить метод "list" на "get_by_filters"
     async def list(
-        self,
-        specification: Specification | None = None,
-        pagination: PaginationParams | None = None,
-        order_by: Any | None = None,
-        select_data: Any | None = None,
-        **filter_by,
+            self,
+            specification: Specification | None = None,
+            pagination: PaginationParams | None = None,
+            order_by: Any | None = None,
+            select_data: Any | None = None,
+            **filter_by,
     ) -> List[SchemaT]:
         if order_by is None:
             if select_data is None:
@@ -228,13 +227,13 @@ class SQLAlchemyRepository(Generic[SchemaT]):
         return result
 
     async def get_by_filters(
-        self,
-        filter_by: dict | None = None,
-        specification: Specification | None = None,
-        pagination: PaginationParams | None = None,
-        order_by: Any | None = None,
-        select_data: Any = None,
-        get_one_or_none: bool = False,
+            self,
+            filter_by: dict | None = None,
+            specification: Specification | None = None,
+            pagination: PaginationParams | None = None,
+            order_by: Any | None = None,
+            select_data: Any = None,
+            get_one_or_none: bool = False,
     ) -> List[SchemaT] | SchemaT | None:
         filter_by = {} if filter_by is None else filter_by
         result = await self.list(
@@ -258,14 +257,14 @@ class SQLAlchemyRepository(Generic[SchemaT]):
         return None
 
     async def aggregate(
-        self,
-        select_data: Any,
-        result_schema: SchemaModel,
-        filter_by: dict | None = None,
-        specification: Specification | None = None,
-        pagination: PaginationParams | None = None,
-        group_by: Any | None = None,
-        order_by: Any | None = None,
+            self,
+            select_data: Any,
+            result_schema: SchemaModel,
+            filter_by: dict | None = None,
+            specification: Specification | None = None,
+            pagination: PaginationParams | None = None,
+            group_by: Any | None = None,
+            order_by: Any | None = None,
     ):
         filter_by = {} if filter_by is None else filter_by
 
@@ -319,10 +318,10 @@ class SQLAlchemyRepository(Generic[SchemaT]):
         return await self.add(data=data)
 
     async def create_if_not_exists(
-        self,
-        data: dict = None,
-        filter_by: dict = None,
-        specification: Specification = None,
+            self,
+            data: dict = None,
+            filter_by: dict = None,
+            specification: Specification = None,
     ) -> UUID4 | int | None:
         result: list[dict] = await self.get_by_filters(
             filter_by=filter_by,
@@ -342,11 +341,11 @@ class SQLAlchemyRepository(Generic[SchemaT]):
     # TODO: Подумать над возвращаемыми значениями!
     # TODO: Добавить в интерфейс "comparison_adapter"
     async def create_many_if_not_exists(
-        self,
-        data: Sequence[dict],
-        comparison_adapter: Adapter,
-        filter_by: dict = None,
-        specification: Specification = None,
+            self,
+            data: Sequence[dict],
+            comparison_adapter: Adapter,
+            filter_by: dict = None,
+            specification: Specification = None,
     ) -> Sequence[UUID4 | int] | None:
         if len(data) > 0:
             existing_entities: Sequence[dict] = await self.get_by_filters(
@@ -398,10 +397,10 @@ class SQLAlchemyRepository(Generic[SchemaT]):
 
     # TODO: Подумать над возвращаемым или возвращаемыми типами
     async def update_by_filters(
-        self,
-        data: dict,
-        filter_by: dict | None = None,
-        specification: Specification | None = None,
+            self,
+            data: dict,
+            filter_by: dict | None = None,
+            specification: Specification | None = None,
     ):
         stmt = select(self._model)
 
@@ -433,9 +432,9 @@ class SQLAlchemyRepository(Generic[SchemaT]):
         await self._session.execute(stmt)
 
     async def delete_by_filters(
-        self,
-        filter_by: dict | None = None,
-        specification: Specification | None = None,
+            self,
+            filter_by: dict | None = None,
+            specification: Specification | None = None,
     ):
         if filter_by is None and specification is None:
             raise
@@ -451,9 +450,9 @@ class SQLAlchemyRepository(Generic[SchemaT]):
     # Other
     # TODO: Переделать интерфейс на "filter_by" в виде словаря
     async def amount(
-        self,
-        specification: Specification | None = None,
-        **filter_by,
+            self,
+            specification: Specification | None = None,
+            **filter_by,
     ) -> int:
         stmt = select(func.count()).select_from(self._model).filter_by(**filter_by)
         if specification is not None:

@@ -3,7 +3,6 @@ from sqlalchemy import func
 
 from belka.core.adapters import Adapter, MatchItems
 from belka.core.pagination.schemas import PaginationParams
-
 from tests.conftest import (
     Item,
     ItemAggSchema,
@@ -11,7 +10,6 @@ from tests.conftest import (
     ItemRepository,
     ItemSchema,
     ItemValueGteSpec,
-    Tag,
     TagRepository,
 )
 
@@ -21,7 +19,7 @@ from tests.conftest import (
 # -----------------------------
 
 async def test_execute_sql_returns_raw_rows_when_no_schema(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     await item_repo.create({"name": "a", "value": 1, "category": "x"})
     await item_repo.create({"name": "b", "value": 2, "category": "x"})
@@ -75,7 +73,7 @@ async def test_get_by_id_returns_schema_when_found(item_repo: ItemRepository):
 
 
 async def test_get_by_id_returns_dict_when_model_uses_to_dict(
-    tag_repo: TagRepository,
+        tag_repo: TagRepository,
 ):
     new_id = await tag_repo.create({"title": "first"})
 
@@ -141,7 +139,7 @@ async def test_get_by_filters_with_pagination(item_repo: ItemRepository):
 
 
 async def test_get_by_filters_get_one_or_none_returns_single(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     new_id = await item_repo.create({"name": "a", "value": 1, "category": "x"})
 
@@ -155,7 +153,7 @@ async def test_get_by_filters_get_one_or_none_returns_single(
 
 
 async def test_get_by_filters_get_one_or_none_returns_none_when_empty(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     result = await item_repo.get_by_filters(
         filter_by={"id": 9999},
@@ -165,7 +163,7 @@ async def test_get_by_filters_get_one_or_none_returns_none_when_empty(
 
 
 async def test_get_by_filters_get_one_or_none_raises_when_many(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     await item_repo.create({"name": "a", "value": 1, "category": "x"})
     await item_repo.create({"name": "b", "value": 2, "category": "x"})
@@ -188,7 +186,7 @@ async def test_get_by_filters_with_order_by(item_repo: ItemRepository):
 
 
 async def test_get_by_filters_with_select_data_on_scalar_raises(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     await item_repo.create({"name": "a", "value": 1, "category": "x"})
 
@@ -285,7 +283,7 @@ async def test_create_if_not_exists_creates_when_absent(item_repo: ItemRepositor
 
 
 async def test_create_if_not_exists_returns_none_when_present(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     await item_repo.create({"name": "a", "value": 1, "category": "x"})
 
@@ -330,7 +328,7 @@ class _NameAdapter(Adapter):
 
 
 async def test_create_many_if_not_exists_inserts_only_new(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     await item_repo.create({"name": "a", "value": 1, "category": "x"})
 
@@ -348,7 +346,7 @@ async def test_create_many_if_not_exists_inserts_only_new(
 
 
 async def test_create_many_if_not_exists_with_empty_list_does_nothing(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     result = await item_repo.create_many_if_not_exists(
         data=[],
@@ -365,7 +363,7 @@ async def test_create_many_if_not_exists_with_empty_list_does_nothing(
 # -----------------------------
 
 async def test_update_by_id_updates_fields_and_returns_id(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     new_id = await item_repo.create({"name": "a", "value": 1, "category": "x"})
 
@@ -481,7 +479,7 @@ async def test_delete_by_ids_removes_listed_only(item_repo: ItemRepository):
 
 
 async def test_delete_by_filters_raises_when_no_filters_and_no_spec(
-    item_repo: ItemRepository,
+        item_repo: ItemRepository,
 ):
     # В коде стоит голый `raise` без объекта — это RuntimeError.
     # TODO: Когда продовый код починят на осмысленное исключение —

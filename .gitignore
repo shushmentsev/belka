@@ -2,6 +2,7 @@
 **/.vscode/
 **/.claude/plans/
 
+**/__pycache__/
 **/.venv/
 **/*.env
 **/*.log

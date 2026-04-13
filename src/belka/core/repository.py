@@ -9,7 +9,7 @@ from belka.core.adapters import Adapter
 from belka.core.pagination.schemas import PaginationParams
 from belka.core.schemas import SchemaModel
 from belka.core.specification import Specification
-from belka.infrastructure.base import Base
+from belka.infrastructure.database.base import Base
 
 Model = type[Base]
 SchemaT = TypeVar("SchemaT")

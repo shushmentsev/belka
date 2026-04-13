@@ -1,15 +1,18 @@
-from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
-from belka.core.schemas import SchemaModel
 
-
-class Base(AsyncAttrs, DeclarativeBase):
-    id: None
-    __mapper_args__ = {"eager_defaults": True}
-
-    def to_dict(self) -> dict:
-        raise NotImplementedError
-
-    def to_schema(self) -> SchemaModel:
-        raise NotImplementedError
+def create_session_maker(url: str) -> async_sessionmaker[AsyncSession]:
+    engine = create_async_engine(
+        url,
+        future=True,
+        echo=False,
+        pool_recycle=60 * 60 * 2,
+        pool_pre_ping=True,
+        pool_size=50,
+        max_overflow=20,
+    )
+    return async_sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)

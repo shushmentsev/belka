@@ -1,7 +1,15 @@
+from typing import Sequence
+
 from sqlalchemy import and_, or_, Select
 from typing_extensions import Self
 
-from belka.utils.sequences import unique_sequence
+
+def _unique_sequence(items: Sequence) -> Sequence:
+    unique_items = []
+    for x in items:
+        if x not in unique_items:
+            unique_items.append(x)
+    return unique_items
 
 
 class Specification:
@@ -33,13 +41,13 @@ class Specification:
 
     def __or__(self, other: Self) -> Self:
         self._models_for_join = list(
-            unique_sequence(self._models_for_join + other._models_for_join),
+            _unique_sequence(self._models_for_join + other._models_for_join),
         )
         self._models_for_outerjoin = list(
-            unique_sequence(self._models_for_outerjoin + other._models_for_outerjoin),
+            _unique_sequence(self._models_for_outerjoin + other._models_for_outerjoin),
         )
         self._models_for_join_onclause = list(
-            unique_sequence(
+            _unique_sequence(
                 self._models_for_join_onclause + other._models_for_join_onclause
             ),
         )
@@ -60,13 +68,13 @@ class Specification:
 
     def __and__(self, other: Self) -> Self:
         self._models_for_join = list(
-            unique_sequence(self._models_for_join + other._models_for_join),
+            _unique_sequence(self._models_for_join + other._models_for_join),
         )
         self._models_for_outerjoin = list(
-            unique_sequence(self._models_for_outerjoin + other._models_for_outerjoin),
+            _unique_sequence(self._models_for_outerjoin + other._models_for_outerjoin),
         )
         self._models_for_join_onclause = list(
-            unique_sequence(
+            _unique_sequence(
                 self._models_for_join_onclause + other._models_for_join_onclause
             ),
         )
@@ -87,8 +95,8 @@ class Specification:
 
 
 def and_for_specifications(
-        previous_specification: Specification | None,
-        current_specification: Specification | None,
+    previous_specification: Specification | None,
+    current_specification: Specification | None,
 ):
     if previous_specification is None:
         if current_specification is not None:
@@ -106,10 +114,10 @@ def and_for_specifications(
 
 
 def and_fof_specifications_with_condition(
-        condition: bool,
-        previous_specification: Specification,
-        current_specification_false: Specification,
-        current_specification_true: Specification,
+    condition: bool,
+    previous_specification: Specification,
+    current_specification_false: Specification,
+    current_specification_true: Specification,
 ):
     current_specification = current_specification_false
     if condition:
@@ -122,8 +130,8 @@ def and_fof_specifications_with_condition(
 
 
 def or_for_specifications(
-        previous_specification: Specification | None,
-        current_specification: Specification | None,
+    previous_specification: Specification | None,
+    current_specification: Specification | None,
 ):
     if previous_specification is None:
         if current_specification is not None:

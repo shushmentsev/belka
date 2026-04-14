@@ -72,7 +72,7 @@ from fastapi_users.authentication import AuthenticationBackend
 
 from belka.auth import AuthConfig, BaseAuthUserManager
 from belka.auth.integrations.dishka import make_auth_provider
-from belka.integrations.dishka import DatabaseConfig, DatabaseProvider
+from belka.infrastructure.database.integrations.dishka import DatabaseConfig, DatabaseProvider
 
 container = make_async_container(
     DatabaseProvider(),

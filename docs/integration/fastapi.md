@@ -19,7 +19,7 @@ from dishka.integrations.fastapi import FromDishka, inject, setup_dishka
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from belka.infrastructure.database.integrations.dishka import DatabaseConfig, DatabaseProvider
+from belka.infrastructure.database.integration.dishka import DatabaseConfig, DatabaseProvider
 
 
 def create_app() -> FastAPI:

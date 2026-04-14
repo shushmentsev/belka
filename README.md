@@ -1,5 +1,5 @@
 belka
 
 ## Интеграции
-- [FastAPI + dishka](docs/integrations/fastapi.md)
-- [Аутентификация (FastAPI-Users)](docs/integrations/auth.md)
+- [FastAPI + dishka](docs/integration/fastapi.md)
+- [Аутентификация (FastAPI-Users)](docs/integration/auth.md)

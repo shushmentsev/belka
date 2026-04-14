@@ -20,7 +20,7 @@ pip install "belka[auth,dishka]" fastapi uvicorn
 
 ```python
 from belka.auth import AuthUserMixin
-from belka.infrastructure.database.base import Base
+from belka.core.models import Base
 
 
 class User(AuthUserMixin, Base):

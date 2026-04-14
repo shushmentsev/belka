@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Mapped, relationship, synonym
 
 from belka.auth import AuthUserMixin
-from belka.infrastructure.database.base import Base
+from belka.core.models import Base
 from belka.rbac.role.models import Role
 
 

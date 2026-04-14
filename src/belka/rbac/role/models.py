@@ -3,7 +3,7 @@ import uuid
 from sqlalchemy import ForeignKey, Integer, PrimaryKeyConstraint, String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship, synonym
 
-from belka.infrastructure.database.base import Base
+from belka.core.models import Base
 from belka.rbac.permission.models import Permission
 from belka.rbac.user.models import User
 

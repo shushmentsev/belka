@@ -10,10 +10,10 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
+from belka.core.models import Base
 from belka.core.repository import SQLAlchemyRepository
 from belka.core.schemas import SchemaModel
 from belka.core.specification import Specification
-from belka.infrastructure.database.base import Base
 
 
 class Item(Base):

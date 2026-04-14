@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey, Integer, PrimaryKeyConstraint, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship, synonym
 
-from belka.infrastructure.database.base import Base
+from belka.core.models import Base
 from belka.rbac.role.models import Role
 
 

@@ -15,6 +15,7 @@ class Base(AsyncAttrs, DeclarativeBase):
     id: None
     __mapper_args__ = {"eager_defaults": True}
 
+    # noinspection PyMethodParameters
     @declared_attr.directive
     def __tablename__(cls) -> str:
         return _camel_to_snake(cls.__name__)

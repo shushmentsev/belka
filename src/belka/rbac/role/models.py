@@ -16,17 +16,17 @@ class Role(Base):
     description: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
     users: Mapped[list["User"]] = relationship(
-        secondary="role_relation_user",
+        secondary="role_xref_user",
         back_populates="roles",
     )
     permissions: Mapped[list["Permission"]] = relationship(
-        secondary="permission_relation_role",
+        secondary="permission_xref_role",
         back_populates="roles",
     )
 
 
 class RoleRelationUser(Base):
-    __tablename__ = "role_relation_user"
+    __tablename__ = "role_xref_user"
     __table_args__ = (PrimaryKeyConstraint("user_id", "role_id"),)
 
     user_id: Mapped[uuid.UUID] = mapped_column(

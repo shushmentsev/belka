@@ -10,6 +10,6 @@ class User(AuthUserMixin, Base):
 
     user_id = synonym("id")
     roles: Mapped[list["Role"]] = relationship(
-        secondary="role_relation_user",
+        secondary="role_xref_user",
         back_populates="users",
     )

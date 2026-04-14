@@ -13,13 +13,13 @@ class Permission(Base):
     description: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
     roles: Mapped[list["Role"]] = relationship(
-        secondary="permission_relation_role",
+        secondary="permission_xref_role",
         back_populates="permissions",
     )
 
 
 class PermissionRelationRole(Base):
-    __tablename__ = "permission_relation_role"
+    __tablename__ = "permission_xref_role"
     __table_args__ = (PrimaryKeyConstraint("role_id", "permission_id"),)
 
     role_id: Mapped[int] = mapped_column(

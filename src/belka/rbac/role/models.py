@@ -26,7 +26,6 @@ class Role(Base):
 
 
 class RoleRelationUser(Base):
-    __tablename__ = "role_xref_user"
     __table_args__ = (PrimaryKeyConstraint("user_id", "role_id"),)
 
     user_id: Mapped[uuid.UUID] = mapped_column(

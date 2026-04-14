@@ -19,7 +19,6 @@ class Permission(Base):
 
 
 class PermissionRelationRole(Base):
-    __tablename__ = "permission_xref_role"
     __table_args__ = (PrimaryKeyConstraint("role_id", "permission_id"),)
 
     role_id: Mapped[int] = mapped_column(

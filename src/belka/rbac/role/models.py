@@ -9,8 +9,6 @@ from belka.rbac.user.models import User
 
 
 class Role(Base):
-    __tablename__ = "role"
-
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     role_id = synonym("id")
 

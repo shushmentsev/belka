@@ -6,8 +6,6 @@ from belka.rbac.role.models import Role
 
 
 class User(AuthUserMixin, Base):
-    __tablename__ = "user"
-
     user_id = synonym("id")
     roles: Mapped[list["Role"]] = relationship(
         secondary="role_xref_user",

@@ -6,8 +6,6 @@ from belka.rbac.role.models import Role
 
 
 class Permission(Base):
-    __tablename__ = "permission"
-
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     permission_id = synonym("id")
 

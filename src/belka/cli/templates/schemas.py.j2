@@ -1,0 +1,20 @@
+from belka.core.schemas import RequestModel, ResponseModel, SchemaModel
+
+
+class {{ class_name }}Schema(SchemaModel):
+    {{ pk_field }}: int
+    # TODO: add fields
+
+
+class {{ class_name }}Response({{ class_name }}Schema, ResponseModel):
+    pass
+
+
+class {{ class_name }}CreateRequest(RequestModel):
+    # TODO: add create fields
+    pass
+
+
+class {{ class_name }}UpdateRequest(RequestModel):
+    # TODO: add update fields
+    pass

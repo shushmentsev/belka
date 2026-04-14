@@ -1,0 +1,7 @@
+from belka.core.uow import UnitOfWork
+
+from .repositories import {{ class_name }}Repository
+
+
+class {{ class_name }}UnitOfWork(UnitOfWork):
+    {{ attr_name }}: {{ class_name }}Repository

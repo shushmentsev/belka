@@ -1,0 +1,11 @@
+from sqlalchemy import Integer
+from sqlalchemy.orm import Mapped, mapped_column, synonym
+
+from belka.core.models import Base
+
+
+class {{ class_name }}(Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    {{ pk_field }} = synonym("id")
+
+    # TODO: add columns

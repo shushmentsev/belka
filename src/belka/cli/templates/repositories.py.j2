@@ -1,0 +1,8 @@
+from belka.core.repository import SQLAlchemyRepository
+
+from .models import {{ class_name }}
+from .schemas import {{ class_name }}Schema
+
+
+class {{ class_name }}Repository(SQLAlchemyRepository[{{ class_name }}Schema]):
+    _model = {{ class_name }}
